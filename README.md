@@ -1,9 +1,10 @@
 
 # getprivileges
 
-C# Sample code to retrieve Privileges on Windows.
+- C# Sample code to retrieve more privileges
+- Powershell script to get more privileges for the current shell.
 
-## Usage
+# C-Sharp
 
 Press a key and get more privileges.
 
@@ -22,14 +23,12 @@ Press a key to get more privilege ...
 Requesting: SeBackupPrivilege
 Received : SeBackupPrivilege
 Press a key to get more privilege ...
-.
-Requesting: SeChangeNotifyPrivilege
-Received : SeChangeNotifyPrivilege
-Press a key to get more privilege ...
-.
-Requesting: SeCreateGlobalPrivilege
-Received : SeCreateGlobalPrivilege
-Press a key to get more privilege ...
-
 ...
 ```
+
+## Powershell 
+
+C-sharp program doesn't elevate the shell it is being called from. You can use
+the Powershell script for that.
+
+![Demonstration image](getprivilege-ps.png)

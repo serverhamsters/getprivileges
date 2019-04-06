@@ -51,7 +51,8 @@ namespace GetPriv
             internal UInt32 PrivilegeCount; /* Always set this to 1 */
             internal _LUID_AND_ATTRIBUTES Privileges;
             /* This is supposed to be an array but I've found no samples of 
-             * someone using it as an array in C-Sharp code. */
+             * someone using it as an array in C-Sharp code. I couldn't get
+             * it to work on my own. */
         }
 
         internal const int SE_PRIVILEGE_ENABLED    = 0x00000002;
@@ -76,7 +77,7 @@ namespace GetPriv
             "SeSystemEnvironmentPrivilege",   "SeSystemProfilePrivilege", 
             "SeSystemtimePrivilege",          "SeTakeOwnershipPrivilege", 
             "SeTcbPrivilege",                 "SeTimeZonePrivilege", 
-            "SeTrustedCredManAccessPrivilege","SeUndockPrivilege",
+            "SeTrustedCredManAccessPrivilege","SeUndockPrivilege"
             // "SeUnsolicitedInputPrivilege" // doesn't exist
         };
 
@@ -105,18 +106,17 @@ namespace GetPriv
                     ref TokenHandle))                      // PHANDLE TokenHandle
             {
                 if (LookupPrivilegeValue(
-                        null,         // LPCSTR lpSystemName
-                        Privilege,    // LPCSTR lpName
-                        out tp.Privileges.Luid))
-                //ref tp.Luid)) // PLUID lpLuid
+                        null,                    // LPCSTR lpSystemName
+                        Privilege,               // LPCSTR lpName
+                        out tp.Privileges.Luid)) // PLUID lpLuid
                 {
                     if (AdjustTokenPrivileges(
-                            TokenHandle, // HANDLE            TokenHandle
-                            false,           // BOOL              DisableAllPrivileges
-                            ref tp,          // PTOKEN_PRIVILEGES NewState
-                            0,               // DWORD             BufferLength
-                            IntPtr.Zero,     // PTOKEN_PRIVILEGES PreviousState
-                            IntPtr.Zero))    // PDWORD            ReturnLength
+                            TokenHandle,  // HANDLE            TokenHandle
+                            false,        // BOOL              DisableAllPrivileges
+                            ref tp,       // PTOKEN_PRIVILEGES NewState
+                            0,            // DWORD             BufferLength
+                            IntPtr.Zero,  // PTOKEN_PRIVILEGES PreviousState
+                            IntPtr.Zero)) // PDWORD            ReturnLength
                     {
                         Console.WriteLine("Received : " + Privilege);
                         return;
